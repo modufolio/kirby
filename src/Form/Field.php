@@ -191,41 +191,34 @@ class Field extends Component
             ],
             'computed' => [
                 'after' => function () {
-                    if ($this->after !== null) {
-                        return $this->model()->toString($this->after);
-                    }
+                    return $this->toString($this->after);
                 },
                 'before' => function () {
-                    if ($this->before !== null) {
-                        return $this->model()->toString($this->before);
-                    }
+                    return $this->toString($this->before);
                 },
                 'default' => function () {
-                    if ($this->default === null) {
-                        return;
-                    }
-
-                    if (is_string($this->default) === false) {
-                        return $this->default;
-                    }
-
-                    return $this->model()->toString($this->default);
+                    return $this->toString($this->default);
                 },
                 'help' => function () {
-                    if ($this->help) {
-                        $help = $this->model()->toString($this->help);
-                        $help = $this->kirby()->kirbytext($help);
-                        return $help;
+                    if (empty($this->help) === false) {
+                        return $this->kirby()->kirbytext($this->toString($this->help));
                     }
                 },
                 'label' => function () {
-                    if ($this->label !== null) {
-                        return $this->model()->toString($this->label);
-                    }
+                    return $this->toString($this->label);
                 },
                 'placeholder' => function () {
-                    if ($this->placeholder !== null) {
-                        return $this->model()->toString($this->placeholder);
+                    return $this->toString($this->placeholder);
+                }
+            ],
+            'methods' => [
+                'toString' => function ($value = null) {
+                    if (empty($value) === false) {
+                        if (is_string($value) === false) {
+                            return $value;
+                        }
+
+                        return $this->model()->toString($value);
                     }
                 }
             ]

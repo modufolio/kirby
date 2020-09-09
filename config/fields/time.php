@@ -37,7 +37,7 @@ return [
     ],
     'computed' => [
         'default' => function () {
-            return $this->toTime($this->default);
+            return $this->toTime($this->toString($this->default));
         },
         'format' => function () {
             return $this->notation === 24 ? 'H:i' : 'h:i a';

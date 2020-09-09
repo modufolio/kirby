@@ -55,7 +55,7 @@ return [
     ],
     'computed' => [
         'default' => function () {
-            return $this->toDate($this->default);
+            return $this->toDate($this->toString($this->default));
         },
         'format' => function () {
             return $this->props['format'] ?? ($this->time() === false ? 'Y-m-d' : 'Y-m-d H:i');

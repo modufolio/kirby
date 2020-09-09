@@ -44,7 +44,7 @@ return [
     ],
     'computed' => [
         'default' => function () {
-            return $this->sanitizeOptions($this->default);
+            return $this->sanitizeOptions($this->toString($this->default));
         },
         'value' => function () {
             return $this->sanitizeOptions($this->value);
