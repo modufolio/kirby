@@ -145,7 +145,22 @@ return [
     ],
     'methods' => [
         'rows' => function ($value) {
+            $kirby = $this->model->kirby();
             $rows  = Data::decode($value, 'yaml');
+
+            // merge with the default content
+            if ($kirby->multilang() === true) {
+                $language = $kirby->language();
+                $defaultLanguage = $kirby->defaultLanguage();
+
+                if ($language->code() !== $defaultLanguage->code()) {
+                    if ($content = $this->model->content($defaultLanguage->code())->get($this->name())) {
+                        $default = Data::decode($content->value(), 'yaml');
+                        $rows    = array_replace_recursive($default, $rows);
+                    }
+                }
+            }
+
             $value = [];
 
             foreach ($rows as $index => $row) {

@@ -212,7 +212,23 @@ return function (App $app) {
          */
         'toStructure' => function (Field $field) {
             try {
-                return new Structure(Data::decode($field->value, 'yaml'), $field->parent());
+                $kirby = $field->parent()->kirby();
+                $data  = Data::decode($field->value, 'yaml');
+
+                // merge with the default content
+                if ($kirby->multilang() === true) {
+                    $language = $kirby->language();
+                    $defaultLanguage = $kirby->defaultLanguage();
+
+                    if ($language->code() !== $defaultLanguage->code()) {
+                        if ($content = $field->parent()->content($defaultLanguage->code())->get($field->key())) {
+                            $default = Data::decode($content->value(), 'yaml');
+                            $data    = array_replace_recursive($default, $data);
+                        }
+                    }
+                }
+
+                return new Structure($data, $field->parent());
             } catch (Exception $e) {
                 if ($field->parent() === null) {
                     $message = 'Invalid structure data for "' . $field->key() . '" field';
