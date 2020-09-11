@@ -212,7 +212,7 @@ return function (App $app) {
          */
         'toStructure' => function (Field $field) {
             try {
-                $kirby = $field->parent()->kirby();
+                $kirby = $field->parent() ? $field->parent()->kirby() : kirby();
                 $data  = Data::decode($field->value, 'yaml');
 
                 // merge with the default content

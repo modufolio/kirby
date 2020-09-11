@@ -145,7 +145,7 @@ return [
     ],
     'methods' => [
         'rows' => function ($value) {
-            $kirby = $this->model->kirby();
+            $kirby = is_string($this->model) === true ? kirby() : $this->model->kirby();
             $rows  = Data::decode($value, 'yaml');
 
             // merge with the default content
