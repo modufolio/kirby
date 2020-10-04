@@ -4,8 +4,10 @@ namespace Kirby\Cms;
 
 use Closure;
 use Kirby\Exception\InvalidArgumentException;
+use Kirby\Exception\PermissionException;
 use Kirby\Toolkit\Collection as BaseCollection;
 use Kirby\Toolkit\Str;
+use Throwable;
 
 /**
  * The Collection class serves as foundation
@@ -336,5 +338,35 @@ class Collection extends BaseCollection
         return parent::toArray($map ?? function ($object) {
             return $object->toArray();
         });
+    }
+
+    /**
+     * Calls a method on a Kirby object in protected mode
+     * without the permissions of the current user
+     *
+     * @param object $object
+     * @param string $attribute
+     * @return mixed
+     */
+    protected function getAttributeFromObject($object, string $attribute)
+    {
+        $auth = kirby()->auth();
+        $userBefore = $auth->currentUserFromImpersonation();
+
+        try {
+            $auth->impersonate('nobody');
+            return parent::getAttributeFromObject($object, $attribute);
+        } catch (PermissionException $e) {
+            throw new PermissionException([
+                'fallback' => 'An internal operation was attempted while in protected mode',
+                'previous' => $e
+            ]);
+        } catch (Throwable $e) {
+            throw $e;
+        } finally {
+            // ensure that the impersonation is *always* reset
+            // to the original value, even if an error occurred
+            $auth->impersonate($userBefore !== null ? $userBefore->id() : null);
+        }
     }
 }
