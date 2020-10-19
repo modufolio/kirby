@@ -73,6 +73,7 @@ import Field from "@/components/Forms/Field.vue";
 import Fieldset from "@/components/Forms/Fieldset.vue";
 import Input from "@/components/Forms/Input.vue";
 import Upload from "@/components/Forms/Upload.vue";
+import Writer from "@/components/Forms/Writer.vue";
 
 /** Form Inputs */
 import CheckboxInput from "@/components/Forms/Input/CheckboxInput.vue";
@@ -120,6 +121,7 @@ import TimeField from "@/components/Forms/Field/TimeField.vue";
 import ToggleField from "@/components/Forms/Field/ToggleField.vue";
 import UrlField from "@/components/Forms/Field/UrlField.vue";
 import UsersField from "@/components/Forms/Field/UsersField.vue";
+import WriterField from "@/components/Forms/Field/WriterField.vue";
 
 /* Form Toolbar */
 import Toolbar from "@/components/Forms/Toolbar.vue";
@@ -144,6 +146,7 @@ Vue.component("k-field", Field);
 Vue.component("k-fieldset", Fieldset);
 Vue.component("k-input", Input);
 Vue.component("k-upload", Upload);
+Vue.component("k-writer", Writer);
 
 Vue.component("k-checkbox-input", CheckboxInput);
 Vue.component("k-checkboxes-input", CheckboxesInput);
@@ -189,6 +192,7 @@ Vue.component("k-time-field", TimeField);
 Vue.component("k-toggle-field", ToggleField);
 Vue.component("k-url-field", UrlField);
 Vue.component("k-users-field", UsersField);
+Vue.component("k-writer-field", WriterField);
 
 Vue.component("k-toolbar", Toolbar);
 Vue.component("k-toolbar-email-dialog", ToolbarEmailDialog);
