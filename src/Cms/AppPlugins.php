@@ -678,7 +678,6 @@ trait AppPlugins
                 'snippets'     => include $root . '/config/snippets.php',
                 'tags'         => include $root . '/config/tags.php'
             ];
-
         }
 
         // default cache types
