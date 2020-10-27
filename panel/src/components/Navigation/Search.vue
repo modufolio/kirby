@@ -35,9 +35,9 @@
           @keydown.esc="close"
         >
         <k-button
+          :icon="isLoading ? 'loader' : 'cancel'"
           :tooltip="$t('close')"
           class="k-search-close"
-          :icon="isLoading ? 'loader' : 'cancel'"
           @click="close"
         />
       </div>
